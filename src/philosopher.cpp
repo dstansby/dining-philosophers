@@ -65,25 +65,22 @@ void Philosopher::think( ) {
 	++hunger;
 }
 
-void Philosopher::sympose(std::default_random_engine& engine, bool &stop) {
+void Philosopher::sympose(std::default_random_engine& engine, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting) {
 	int sleepo = std::uniform_int_distribution<int>(0,255)(engine);
 	std::this_thread::sleep_for(std::chrono::milliseconds(sleepo));
 	while (!stop) {
+		if (pause) {
+			waiting++;
+			while(pause)
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+
+
 		int hunger_chance = 1 << hunger;
-		std::cout << name;
 		if (std::uniform_int_distribution<int>(0,hunger_chance)(engine) == 0) {
 			think( );
-			std::cout << " has thought" << std::endl;
 		} else {
 			bool has_et = eat( );
-			std::cout << (has_et ? " has eaten" : " couldn't eat") << std::endl;
-		}
-		const int hungry_limit = hunger_threshold;
-		const int very_hungry_limit = 2 * hunger_threshold;
-		std::stringstream ss;
-		if (hunger > hungry_limit) {
-			ss << name << " is " << ((hunger > very_hungry_limit) ? "very ": " ") << "hungry (" << hunger << ")."<< std::endl;
-			std::cout << ss.str();
 		}
 	}
 }

@@ -13,6 +13,7 @@
 #include <string>
 #include <chrono>
 #include <random>
+#include <atomic>
 
 #include "chopstick.hpp"
 
@@ -38,7 +39,7 @@ public:
 
 	void think( );
 
-	void sympose(std::default_random_engine&, bool&);
+	void sympose(std::default_random_engine &engine, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting);
 
 	std::string get_name( );
 };
