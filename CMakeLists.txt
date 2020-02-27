@@ -11,6 +11,7 @@ add_executable(philosophers src/philosophers.cpp
 	src/table.cpp
 	src/philosopher.cpp
 	src/chopstick.cpp
+	src/visualise.cpp
 )
 target_link_libraries(philosophers ${CMAKE_THREAD_LIBS_INIT} )
 

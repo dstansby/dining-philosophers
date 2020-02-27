@@ -8,14 +8,16 @@
  */
 
 #include "table.hpp"
+#include "visualise.hpp"
 
 #include <random>
 #include <thread>
+#include <atomic>
 #include <vector>
 #include <list>
 #include <iostream>
 
-void randomize_philosophize(Philosopher &phil, int i, bool &stop);
+void randomize_philosophize(Philosopher &phil, int i, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting);
 void kill_timer(int millis, bool &stop);
 
 Table::Table(std::list<std::string> names)
@@ -42,22 +44,28 @@ Table::Table(std::list<std::string> names)
 
 void Table::sympose( ) {
 	bool stop = false;
+	std::atomic<bool> pause;
+	pause = false;
+	std::atomic<int> waiting;
+	waiting = 0;
 	// Create the philosopher threads
 	for (int i = 0; i < philosophers.size(); i++) {
-		threads[i] = move(std::thread(randomize_philosophize, std::ref(philosophers[i]), i, std::ref(stop)));
+		threads[i] = move(std::thread(randomize_philosophize, std::ref(philosophers[i]), i, std::ref(stop), std::ref(pause), std::ref(waiting)));
 	}
-	std::thread kill_thread(kill_timer, 1000, std::ref(stop));
+	std::thread kill_thread(kill_timer, 3000, std::ref(stop));
+	std::thread visual_thread(visualise, std::ref(philosophers), std::ref(pause), std::ref(waiting), std::ref(stop));
 	// Join the threads
 	for (auto iter = threads.begin(); iter != threads.end(); iter++) {
 		iter->join( );
 	}
 	kill_thread.join( );
+	visual_thread.join();
 
 }
 
-void randomize_philosophize(Philosopher &phil, int i, bool &stop) {
+void randomize_philosophize(Philosopher &phil, int i, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting) {
 	std::default_random_engine engine(time(0)+i);
-	phil.sympose(engine, stop);
+	phil.sympose(engine, stop, pause, waiting);
 }
 
 void kill_timer(int millis, bool &stop) {
