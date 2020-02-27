@@ -42,6 +42,8 @@ public:
 	void sympose(std::default_random_engine &engine, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting);
 
 	std::string get_name( );
+
+	int get_hunger( );
 };
 
 

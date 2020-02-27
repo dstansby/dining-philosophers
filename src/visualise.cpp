@@ -42,10 +42,10 @@ void visualise(std::vector<Philosopher> &philosophers, std::atomic<bool> &pause,
 
 void display_philosopher(std::ostream &os, Philosopher philosopher) {
 	os << "    "; // left margin
-	os << (philosopher.have_left() ? "|" : " ");
+	os << (philosopher.have_left( ) ? "|" : " ");
 	os << '\xe2' << '\x98' << '\xba'; // Smiling happy face
-	os << (philosopher.have_right() ? "|" : " ");
-	os << "    " << philosopher.get_name();
+	os << (philosopher.have_right( ) ? "|" : " ");
+	os << "    " << philosopher.get_name( ) << "(" << philosopher.get_hunger( ) << ")";
 	os << std::endl;
 
 }

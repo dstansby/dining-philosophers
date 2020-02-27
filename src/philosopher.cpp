@@ -88,3 +88,7 @@ void Philosopher::sympose(std::default_random_engine& engine, bool &stop, std::a
 std::string Philosopher::get_name( ) {
 	return name;
 }
+
+int Philosopher::get_hunger( ) {
+	return hunger;
+}
