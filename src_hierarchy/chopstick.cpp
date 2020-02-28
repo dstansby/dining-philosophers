@@ -7,8 +7,8 @@
 
 #include "../src_hierarchy/chopstick.hpp"
 
-Chopstick::Chopstick( )
-: mutt() { }
+Chopstick::Chopstick(int rid)
+: mutt(), resource_id(rid) { }
 
 bool Chopstick::try_pick_up( ) {
 	return mutt.try_lock();
