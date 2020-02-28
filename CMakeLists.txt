@@ -15,6 +15,7 @@ add_executable(philosophers src/philosophers.cpp
 )
 target_link_libraries(philosophers ${CMAKE_THREAD_LIBS_INIT} )
 
+# Try and wait dining philosophers
 add_executable(philosophers_try_wait src/philosophers.cpp
 	src/table.cpp
 	src/philosopher_try_wait.cpp
@@ -23,6 +24,14 @@ add_executable(philosophers_try_wait src/philosophers.cpp
 )
 target_link_libraries(philosophers_try_wait ${CMAKE_THREAD_LIBS_INIT} )
 
+# Resource hierarchy dining philosophers
+add_executable(philosophers_hierarchy src_hierarchy/philosophers.cpp
+	src_hierarchy/table.cpp
+	src_hierarchy/philosopher.cpp
+	src_hierarchy/chopstick.cpp
+	src_hierarchy/visualise.cpp
+)
+target_link_libraries(philosophers_hierarchy ${CMAKE_THREAD_LIBS_INIT} )
 
 
 enable_testing()
