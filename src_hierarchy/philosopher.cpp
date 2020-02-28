@@ -49,7 +49,7 @@ bool Philosopher::have_right( ) {
 // Eat! Tries to get both chopsticks, sleeps the thread while eating,
 // and then puts down both chopsticks.
 bool Philosopher::eat( ) {
-	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) ) {
+	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) || (!have_l && !get_left( ))) {
 		++hunger;
 		return false;
 	}
