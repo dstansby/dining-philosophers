@@ -33,6 +33,14 @@ add_executable(philosophers_hierarchy src_hierarchy/philosophers.cpp
 )
 target_link_libraries(philosophers_hierarchy ${CMAKE_THREAD_LIBS_INIT} )
 
+# Mutex dining philosophers
+add_executable(philosophers_mutex src_mutex/philosophers.cpp
+	src_mutex/table.cpp
+	src_mutex/philosopher.cpp
+	src_mutex/chopstick.cpp
+	src_mutex/visualise.cpp
+)
+target_link_libraries(philosophers_mutex ${CMAKE_THREAD_LIBS_INIT} )
 
 enable_testing()
 
