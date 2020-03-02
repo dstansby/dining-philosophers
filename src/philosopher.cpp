@@ -15,8 +15,8 @@
 
 Philosopher::Philosopher(std::string name, Chopstick *left, Chopstick *right)
 : name (name), left (left), right (right), have_l (false), have_r (false),
-  eat_time (std::chrono::milliseconds(200)),
-  think_time (std::chrono::milliseconds(300)),
+  eat_time (std::chrono::milliseconds(20)),
+  think_time (std::chrono::milliseconds(30)),
   hunger (0)
 { }
 
@@ -62,6 +62,7 @@ bool Philosopher::eat( ) {
 
 // Think! Keep chopsticks in hand while doing so
 void Philosopher::think( ) {
+	std::this_thread::sleep_for(think_time);
 	++hunger;
 }
 
