@@ -66,14 +66,8 @@ void Philosopher::think( ) {
 	++hunger;
 }
 
-void Philosopher::sympose(
-		std::default_random_engine& engine,
-		bool &stop,
-		std::atomic<bool> &pause,
-		std::atomic<int> &waiting,
-		std::mutex &eat_exclusion) {
-	int sleepo = std::uniform_int_distribution<int>(0,255)(engine);
-	std::this_thread::sleep_for(std::chrono::milliseconds(sleepo));
+void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting, std::mutex &eat_exclusion) {
+	std::default_random_engine engine(time(0));
 	while (!stop) {
 		if (pause) {
 			waiting++;

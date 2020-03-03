@@ -17,7 +17,6 @@
 #include <list>
 #include <iostream>
 
-void randomize_philosophize(Philosopher &phil, int i, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting);
 void kill_timer(int millis, bool &stop);
 
 Table::Table(std::list<std::string> names)
@@ -39,7 +38,6 @@ Table::Table(std::list<std::string> names)
 		++left;
 		++right;
 	}
-	std::cout << "There are " << philosophers.size() << " philosophers." << std::endl;
 }
 
 void Table::sympose( ) {
@@ -50,7 +48,7 @@ void Table::sympose( ) {
 	waiting = 0;
 	// Create the philosopher threads
 	for (int i = 0; i < philosophers.size(); i++) {
-		threads[i] = move(std::thread(randomize_philosophize, std::ref(philosophers[i]), i, std::ref(stop), std::ref(pause), std::ref(waiting)));
+		threads[i] = move(std::thread(&Philosopher::sympose, std::ref(philosophers[i]), std::ref(stop), std::ref(pause), std::ref(waiting)));
 	}
 	std::thread kill_thread(kill_timer, 3000, std::ref(stop));
 	std::thread visual_thread(visualise, std::ref(philosophers), std::ref(pause), std::ref(waiting), std::ref(stop));
@@ -61,11 +59,6 @@ void Table::sympose( ) {
 	kill_thread.join( );
 	visual_thread.join();
 
-}
-
-void randomize_philosophize(Philosopher &phil, int i, bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting) {
-	std::default_random_engine engine(time(0)+i);
-	phil.sympose(engine, stop, pause, waiting);
 }
 
 void kill_timer(int millis, bool &stop) {

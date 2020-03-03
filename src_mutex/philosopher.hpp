@@ -39,12 +39,7 @@ public:
 
 	void think( );
 
-	void sympose(
-			std::default_random_engine &engine,
-			bool &stop,
-			std::atomic<bool> &pause,
-			std::atomic<int> &waiting,
-			std::mutex &eat_exclusion);
+	void sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting, std::mutex &eat_exclusion);
 
 	std::string get_name( );
 

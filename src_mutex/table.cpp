@@ -17,13 +17,6 @@
 #include <list>
 #include <iostream>
 
-void randomize_philosophize(
-		Philosopher &phil,
-		int i,
-		bool &stop,
-		std::atomic<bool> &pause,
-		std::atomic<int> &waiting,
-		std::mutex &eat_exclusion);
 void kill_timer(int millis, bool &stop);
 
 Table::Table(std::list<std::string> names)
@@ -57,7 +50,7 @@ void Table::sympose( ) {
 	std::mutex eat_exclusion;
 	// Create the philosopher threads
 	for (int i = 0; i < philosophers.size(); i++) {
-		threads[i] = move(std::thread(randomize_philosophize, std::ref(philosophers[i]), i, std::ref(stop), std::ref(pause), std::ref(waiting), std::ref(eat_exclusion)));
+		threads[i] = move(std::thread(&Philosopher::sympose, std::ref(philosophers[i]), std::ref(stop), std::ref(pause), std::ref(waiting), std::ref(eat_exclusion)));
 	}
 	std::thread kill_thread(kill_timer, 3000, std::ref(stop));
 	std::thread visual_thread(visualise, std::ref(philosophers), std::ref(pause), std::ref(waiting), std::ref(stop));
@@ -68,17 +61,6 @@ void Table::sympose( ) {
 	kill_thread.join( );
 	visual_thread.join();
 
-}
-
-void randomize_philosophize(
-		Philosopher &phil,
-		int i,
-		bool &stop,
-		std::atomic<bool> &pause,
-		std::atomic<int> &waiting,
-		std::mutex &eat_exclusion) {
-	std::default_random_engine engine(time(0)+i);
-	phil.sympose(engine, stop, pause, waiting, eat_exclusion);
 }
 
 void kill_timer(int millis, bool &stop) {
