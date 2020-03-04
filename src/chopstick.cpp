@@ -11,6 +11,7 @@
 #include "chopstick.hpp"
 
 Chopstick::Chopstick( )
+/* HANDS ON 3: Initialise the new resource identifier */
 : mutt() { }
 
 bool Chopstick::try_pick_up( ) {

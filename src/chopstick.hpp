@@ -15,6 +15,8 @@
 class Chopstick {
 private:
 	std::mutex mutt;
+	/* HANDS ON 3: Add a resource identifier. */
+	/* HINT: Try a const int */
 public:
 	Chopstick();
 

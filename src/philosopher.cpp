@@ -45,25 +45,31 @@ bool Philosopher::have_right( ) {
 // Eat! Tries to get both chopsticks, sleeps the thread while eating,
 // and then puts down both chopsticks.
 bool Philosopher::eat( ) {
+	/* HANDS ON 3: Use the resource identifier from the Chopstick
+	 * class to pick up in a fixed order. */
+	/* HANDS ON 4: Remove the references to the resource hierarchy. */
 	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) ) {
 		++hunger;
 		return false;
 	}
 
-	std::this_thread::sleep_for(eat_time);
+	/* HANDS ON 1: Sleep the thread for sleep_time milliseconds */
 
 	hunger = 0;
 
-	left->set_down( );
-	have_l = false;
-	right->set_down( );
-	have_r = false;
+	/* HANDS ON 1: set down the two chopsticks and reset the relevant
+	   class member variables */
 
 	return true;
 }
 
 // Think! Keep chopsticks in hand while doing so
 void Philosopher::think( ) {
+	/* HANDS ON 2: Implement the try and wait algorithm by getting
+	 * the philosophers to put down their chopsticks before thinking.
+	 *
+	 * HANDS ON 3: Remove the try and wait code.
+	 */
 	std::this_thread::sleep_for(think_time);
 	++hunger;
 }
@@ -88,7 +94,9 @@ void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int>
 		if (std::uniform_int_distribution<int>(0,hunger_chance)(engine) == 0) {
 			think( );
 		} else {
+			/* HANDS ON 4: Acquire the eating mutex before eating. */
 			bool has_et = eat( );
+			/* HANDS ON 4: Unlock the eating mutex */
 		}
 	}
 }
