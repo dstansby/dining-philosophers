@@ -1,10 +1,10 @@
 /*
  * philosophers.cpp
  *
- * Implementation of the philosopher class
+ * Main function for the dining philosophers
  *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #include "table.hpp"
@@ -13,7 +13,7 @@
 #include <string>
 
 int main( ) {
-	// Five philosophers
+	// Five philosophers from the Chinese Philosophy pages on Wikipedia
 	std::list<std::string> names {"Kong Fuzi", "Duke Wen", "Shang Yang", "Mo Di", "Zou Yan"};
 
 	Table table(names);

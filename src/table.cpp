@@ -1,10 +1,12 @@
 /*
  * table.cpp
  *
- *	Definition of the table at which our philosophers are eating
+ *	Definition of the table at which our philosophers are eating.
+ *	Constructs the objects and sets of the thread which simulate the
+ *	philosophers.
  *
  *  Created on: 4 Feb 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #include "table.hpp"
@@ -50,7 +52,9 @@ void Table::sympose( ) {
 	for (int i = 0; i < philosophers.size(); i++) {
 		threads[i] = move(std::thread(&Philosopher::sympose, std::ref(philosophers[i]), std::ref(stop), std::ref(pause), std::ref(waiting)));
 	}
+	// Create the timer thread, which halts execution after the specified number of milliseconds (3000)
 	std::thread kill_thread(kill_timer, 3000, std::ref(stop));
+	// Create the visualisation thread, which will occasionally pause execution to get the philosophers state
 	std::thread visual_thread(visualise, std::ref(philosophers), std::ref(pause), std::ref(waiting), std::ref(stop));
 	// Join the threads
 	for (auto iter = threads.begin(); iter != threads.end(); iter++) {
@@ -61,6 +65,7 @@ void Table::sympose( ) {
 
 }
 
+// A function to stop the program after a given number of milliseconds
 void kill_timer(int millis, bool &stop) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(millis));
 	stop = true;

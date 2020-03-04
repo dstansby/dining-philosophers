@@ -1,8 +1,11 @@
 /*
  * chopstick.hpp
  *
+ *	Definition of the chopstick class for the dining philosophers
+ *	using an integer resource identifier.
+ *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #ifndef PHILOSOPHERS_CHOPSTICK_HPP_

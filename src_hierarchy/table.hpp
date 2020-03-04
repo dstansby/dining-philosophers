@@ -4,7 +4,7 @@
  * Declaration of the table at which our philosophers are eating
  *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #ifndef PHILOSOPHERS_TABLE_HPP_

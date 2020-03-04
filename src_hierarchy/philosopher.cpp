@@ -1,18 +1,20 @@
 /*
  * philosopher.cpp:
  *
- * Implementation of a dining philosopher
+ * Implementation of a dining philosopher class, using a resource
+ * hierarchy.
  *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Timothy Spain
  */
 
-#include "../src_hierarchy/philosopher.hpp"
+#include "philosopher.hpp"
 
 #include <thread>
 #include <sstream>
 #include <iostream>
 
+// Construct a philosopher from a name and two chopstick pointers
 Philosopher::Philosopher(std::string name, Chopstick *left, Chopstick *right)
 : name (name), left (left), right (right), have_l (false), have_r (false),
   eat_time (std::chrono::milliseconds(20)),
@@ -37,7 +39,8 @@ bool Philosopher::get_right( ) {
 	return have_r;
 }
 
-// Getters for having chopsticks
+// Getters for the boolean as to whether the instances holds each
+// chopstick
 bool Philosopher::have_left( ) {
 	return have_l;
 }
@@ -72,6 +75,9 @@ void Philosopher::think( ) {
 	++hunger;
 }
 
+// Eat, think and be merry. Executes until the stop bool stops
+// execution. Pauses execution when the pause boolean is set, and
+// then increments the waiting counter to notify the pausing thread
 void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting) {
 	std::default_random_engine engine(time(0));
 	while (!stop) {

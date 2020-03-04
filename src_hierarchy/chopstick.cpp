@@ -1,8 +1,12 @@
 /*
  * chopstick.cpp
  *
+ *	Chopstick class implementation for the dining philosophers
+ *	problem. A wrapper around a std::mutex, with an additional
+ *	resource id.
+ *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #include "../src_hierarchy/chopstick.hpp"

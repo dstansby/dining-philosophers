@@ -1,8 +1,11 @@
 /*
  * chopstick.cpp
  *
+ *	Chopstick class implementation for the dining philosophers
+ *	problem. A thin wrapper around a std::mutex.
+ *
  *  Created on: 31 Jan 2020
- *      Author: tim
+ *      Author: Tim Spain
  */
 
 #include "chopstick.hpp"

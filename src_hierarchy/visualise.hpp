@@ -1,14 +1,18 @@
 /*
  * visualise.hpp
  *
+ *	Definition of the function to display the current state of the
+ *	dining philosophers.
+ *
  *  Created on: 27 Feb 2020
- *      Author: tim
+ *      Author: Timothy Spain
  */
+
+#include "philosopher.hpp"
 
 #include <vector>
 #include <list>
 #include <mutex>
-#include "../src_hierarchy/philosopher.hpp"
 
 #ifndef SRC_VISUALISE_HPP_
 #define SRC_VISUALISE_HPP_
