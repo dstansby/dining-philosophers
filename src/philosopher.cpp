@@ -47,7 +47,6 @@ bool Philosopher::have_right( ) {
 bool Philosopher::eat( ) {
 	/* HANDS ON 3: Use the resource identifier from the Chopstick
 	 * class to pick up in a fixed order. */
-	/* HANDS ON 4: Remove the references to the resource hierarchy. */
 	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) ) {
 		++hunger;
 		return false;
@@ -67,8 +66,6 @@ bool Philosopher::eat( ) {
 void Philosopher::think( ) {
 	/* HANDS ON 2: Implement the try and wait algorithm by getting
 	 * the philosophers to put down their chopsticks before thinking.
-	 *
-	 * HANDS ON 3: Remove the try and wait code.
 	 */
 	std::this_thread::sleep_for(think_time);
 	++hunger;
