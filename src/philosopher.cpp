@@ -52,7 +52,7 @@ bool Philosopher::eat( ) {
 		return false;
 	}
 
-	/* HANDS ON 1: Sleep the thread for sleep_time milliseconds */
+	/* HANDS ON 1: Sleep the thread for eat_time milliseconds */
 
 	hunger = 0;
 
