@@ -41,6 +41,9 @@ public:
 	// Return whether the chopsticks are currently held
 	bool have_left( );
 	bool have_right( );
+	// Put down chopsticks if held
+	void put_down_left( );
+	void put_down_right( );
 
 	// Execute the eat function, reducing hunger and returning true
 	// if successful

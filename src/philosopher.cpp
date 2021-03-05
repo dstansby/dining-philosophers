@@ -32,6 +32,21 @@ bool Philosopher::get_right( ) {
 	return have_r;
 }
 
+void Philosopher::put_down_left(){
+  if (have_l){
+    left->set_down();
+    have_l = false;
+  }
+}
+
+void Philosopher::put_down_right(){
+  if (have_r){
+    right->set_down();
+    have_r = false;
+  }
+}
+
+
 // Getters for the boolean as to whether the instances holds each
 // chopstick
 bool Philosopher::have_left( ) {
@@ -55,10 +70,8 @@ bool Philosopher::eat( ) {
   std::this_thread::sleep_for(eat_time);
 	hunger = 0;
 
-  have_l = false;
-  left->set_down();
-  have_r = false;
-  right->set_down();
+  put_down_left();
+  put_down_right();
 
 	return true;
 }
