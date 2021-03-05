@@ -15,13 +15,13 @@
 class Chopstick {
 private:
 	std::mutex mutt;
-	/* HANDS ON 3: Add a resource identifier. */
-	/* HINT: Try a const int */
+	const int resource_id;
 public:
-	Chopstick();
+	Chopstick(int rid);
 
 	bool try_pick_up();
 	void set_down();
+	int get_resource_id();
 
 };
 

@@ -22,13 +22,24 @@ Philosopher::Philosopher(std::string name, Chopstick *left, Chopstick *right)
 { }
 
 // Try to get left (right) chopstick. Returns true on success.
+// Only pick this up if it is either
+//  - The lowest chopstick number
+//  - The other chopstick has already been picked up
 bool Philosopher::get_left( ) {
-	have_l = left->try_pick_up( );
-	return have_l;
+  if (have_r || (left->get_resource_id() < right->get_resource_id())){
+    have_l = left->try_pick_up( );
+  }
+  return have_l;
 }
 
+// Try to get left (right) chopstick. Returns true on success.
+// Only pick this up if it is either
+//  - The lowest chopstick number
+//  - The other chopstick has already been picked up
 bool Philosopher::get_right( ) {
-	have_r = right->try_pick_up( );
+  if (have_l || (right->get_resource_id() < left->get_resource_id())){
+    have_r = right->try_pick_up( );
+  }
 	return have_r;
 }
 
@@ -60,9 +71,9 @@ bool Philosopher::have_right( ) {
 // Eat! Tries to get both chopsticks, sleeps the thread while eating,
 // and then puts down both chopsticks.
 bool Philosopher::eat( ) {
-	/* HANDS ON 3: Use the resource identifier from the Chopstick
-	 * class to pick up in a fixed order. */
-	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) ) {
+	// Note that we have to ry and pick up the left, then the right, and then the left again,
+  // in case picking up the right was blocking picking up the left
+	if ( (!have_l && !get_left( )) || (!have_r && !get_right( )) || (!have_l && !get_left( ))) {
 		++hunger;
 		return false;
 	}

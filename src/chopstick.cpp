@@ -10,9 +10,8 @@
 
 #include "chopstick.hpp"
 
-Chopstick::Chopstick( )
-/* HANDS ON 3: Initialise the new resource identifier */
-: mutt() { }
+Chopstick::Chopstick(int rid)
+: mutt(), resource_id(rid) { }
 
 bool Chopstick::try_pick_up( ) {
 	return mutt.try_lock();
@@ -20,4 +19,8 @@ bool Chopstick::try_pick_up( ) {
 
 void Chopstick::set_down( ) {
 	mutt.unlock( );
+}
+
+int Chopstick::get_resource_id(){
+	return resource_id;
 }

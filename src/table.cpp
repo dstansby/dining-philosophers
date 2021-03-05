@@ -28,7 +28,7 @@ Table::Table(std::list<std::string> names)
 
 	// Create all chopsticks
 	for (int i = 0; i < n_phil; i++) {
-		chopsticks.emplace_back( );
+		chopsticks.emplace_back(i);
 	}
 
 	// Create all philosophers, and assign their chopsticks, wrapping the right iterator if the end of the list is reached.
