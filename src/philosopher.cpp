@@ -52,12 +52,13 @@ bool Philosopher::eat( ) {
 		return false;
 	}
 
-	/* HANDS ON 1: Sleep the thread for eat_time milliseconds */
-
+  std::this_thread::sleep_for(eat_time);
 	hunger = 0;
 
-	/* HANDS ON 1: set down the two chopsticks and reset the relevant
-	   class member variables */
+  have_l = false;
+  left->set_down();
+  have_r = false;
+  right->set_down();
 
 	return true;
 }
