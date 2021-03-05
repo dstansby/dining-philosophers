@@ -54,19 +54,19 @@ void Table::sympose( ) {
 	// Create the philosopher threads
 	for (int i = 0; i < philosophers.size(); i++) {
 		/* HANDS ON 4: Pass the eating mutex to the threads. You will need wrap the mutex in a std::ref */
-		/* HANDS ON 1: Inside the move() function call, start threads
-		 *  that call Philosopher::sympose() for each philosopher.
-		 *  Any argument that is passed as a reference into the
-		 *  function should be placed inside a std::ref(). For example: ,..., std::ref(pause), ... */
-		//		threads[i] = move();
+		// Create philospher thread
+		//
+		// First argument is the function, and the remaining arguments are arguments
+		// passed to that function
+		std::thread philosopher_thread (&Philosopher::sympose, std::ref(philosophers[i]), std::ref(stop), std::ref(pause), std::ref(waiting));
+		threads[i] = move(philosopher_thread);
 	}
 	// Create the timer thread, which halts execution after the specified number of milliseconds (3000)
 	std::thread kill_thread(kill_timer, 3000, std::ref(stop));
 	// Create the visualisation thread, which will occasionally pause execution to get the philosophers state
 	std::thread visual_thread(visualise, std::ref(philosophers), std::ref(pause), std::ref(waiting), std::ref(stop));
-	// HANDS ON 1: Join the threads in the thread array
-	for (auto iter = threads.begin(); iter != threads.end(); iter++) {
-		iter->join( );
+	for (auto iter_thr = threads.begin(); iter_thr != threads.end(); iter_thr++) {
+		iter_thr->join( );
 	}
 	kill_thread.join( );
 	visual_thread.join();
