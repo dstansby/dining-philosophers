@@ -88,7 +88,7 @@ void Philosopher::think( ) {
 // Eat, think and be merry. Executes until the stop bool stops
 // execution. Pauses execution when the pause boolean is set, and
 // then increments the waiting counter to notify the pausing thread
-void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting) {
+void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting, std::mutex &eat_exclusion) {
 	std::default_random_engine engine(time(0));
 	while (!stop) {
 		if (pause) {
@@ -105,9 +105,9 @@ void Philosopher::sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int>
 		if (std::uniform_int_distribution<int>(0,hunger_chance)(engine) == 0) {
 			think( );
 		} else {
-			/* HANDS ON 4: Acquire the eating mutex before eating. */
+			eat_exclusion.lock();
 			bool has_et = eat( );
-			/* HANDS ON 4: Unlock the eating mutex */
+			eat_exclusion.unlock();
 		}
 	}
 }

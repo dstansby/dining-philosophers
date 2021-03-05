@@ -54,7 +54,7 @@ public:
 
 	// Eat and think, stopping once stop is true, pausing when pause
 	// is true and then incrementing the waiting counter
-	void sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting);
+	void sympose(bool &stop, std::atomic<bool> &pause, std::atomic<int> &waiting, std::mutex &eat_exclusion);
 
 	// Get the defined name
 	std::string get_name( );

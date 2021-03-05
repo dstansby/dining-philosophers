@@ -48,9 +48,7 @@ void Table::sympose( ) {
 	pause = false;
 	std::atomic<int> waiting;
 	waiting = 0;
-	/* HANDS ON 4:
-	 * Create a mutex to control access to the ability to eat.
-	 */
+	std::mutex eat_exclusion;
 	// Create the philosopher threads
 	for (int i = 0; i < philosophers.size(); i++) {
 		/* HANDS ON 4: Pass the eating mutex to the threads. You will need wrap the mutex in a std::ref */
@@ -58,7 +56,12 @@ void Table::sympose( ) {
 		//
 		// First argument is the function, and the remaining arguments are arguments
 		// passed to that function
-		std::thread philosopher_thread (&Philosopher::sympose, std::ref(philosophers[i]), std::ref(stop), std::ref(pause), std::ref(waiting));
+		std::thread philosopher_thread (&Philosopher::sympose,
+																	  std::ref(philosophers[i]),
+																		std::ref(stop),
+																		std::ref(pause),
+																		std::ref(waiting),
+																	  std::ref(eat_exclusion));
 		threads[i] = move(philosopher_thread);
 	}
 	// Create the timer thread, which halts execution after the specified number of milliseconds (3000)
