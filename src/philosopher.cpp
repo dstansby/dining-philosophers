@@ -76,11 +76,10 @@ bool Philosopher::eat( ) {
 	return true;
 }
 
-// Think! Keep chopsticks in hand while doing so
+// Think! Put down chopsticks before doing so
 void Philosopher::think( ) {
-	/* HANDS ON 2: Implement the try and wait algorithm by getting
-	 * the philosophers to put down their chopsticks before thinking.
-	 */
+  put_down_left();
+  put_down_right();
 	std::this_thread::sleep_for(think_time);
 	++hunger;
 }
